@@ -18,7 +18,7 @@ set_error_handler('customErrorHandler');
 
 $postJson = file_get_contents('php://input');
 $postData = json_decode($postJson, true);
-print_r($postData);
+// print_r($postData);
 
 // $filePath = trim($postData['filePath']);
 if($postData['action'] === 'getFile') {
@@ -28,4 +28,9 @@ if($postData['action'] === 'getFile') {
     // echo $fileContents;
 } else if($postData['action'] === 'saveFile') {
     echo "Saving...";
+
+    // $filePath = $postData['file'];
+    // $fileContents = $postData['file'];
+    file_put_contents($postData['file'], $postData['contents']);
+    echo "Saved!";
 }

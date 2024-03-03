@@ -20,7 +20,12 @@ $postJson = file_get_contents('php://input');
 $postData = json_decode($postJson, true);
 print_r($postData);
 
-$filePath = trim($postData['filePath']);
+// $filePath = trim($postData['filePath']);
+if($postData['action'] === 'getFile') {
+    $filePath = $postData['file'];
 
-$fileContents = file_get_contents($filePath);
-echo $fileContents;
+    $fileContents = file_get_contents($filePath);
+    // echo $fileContents;
+} else if($postData['action'] === 'saveFile') {
+    echo "Saving...";
+}

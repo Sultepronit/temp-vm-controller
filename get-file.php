@@ -25,7 +25,7 @@ if($postData['action'] === 'getFile') {
     $filePath = $postData['file'];
 
     $fileContents = file_get_contents($filePath);
-    // echo $fileContents;
+    echo $fileContents;
 } else if($postData['action'] === 'saveFile') {
     echo "Saving...";
 

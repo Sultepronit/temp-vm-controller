@@ -7,5 +7,7 @@ $postJson = file_get_contents('php://input');
 $postData = json_decode($postJson, true);
 print_r($postData);
 
+$filePath = $postData['filePath'];
+
 $fileContents = file_get_contents($filePath);
 echo $fileContents;

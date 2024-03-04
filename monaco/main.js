@@ -51,6 +51,15 @@ function save() {
     });
 }
 
+// document.addEventListener('keyup', event => {
+document.addEventListener('keydown', event => {
+    if(event.ctrlKey && event.key === 's') {
+        event.preventDefault();
+        console.log('saving!');
+        save();
+    }
+});
+
 document.getElementById('save')
     .addEventListener('click', () => save());
 

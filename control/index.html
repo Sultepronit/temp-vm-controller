@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage the vm!</title>
+    <!-- <script type="module" src="main.js"></script> -->
+    <script src="sendCommand.js" defer></script>
+    <script src="main.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <pre id="history"></pre>
+        <div id="prev-container">
+            <textarea
+                id="previous-commands"
+                class="input-area"
+                rows="1"
+            ></textarea>
+            <button id="clear-prev">❌</button>
+        </div>
+        <textarea id="the-input" class="input-area" rows="1"></textarea>
+        <div class="swift-commands">
+            <button id="statuses-button">statuses</button>
+            <button id="pull-button">pull</button>
+            <button id="pushdb-button">pushdb</button>
+        </div>
+    </main>
+</body>
+</html>

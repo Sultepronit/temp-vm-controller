@@ -19,7 +19,8 @@ function prepareTheReceivedText(input) {
 
 function addResponse(response) {
     const prepared = prepareTheReceivedText(response);
-    history.innerHTML += `<p>${prepared}</p>`;
+    // history.innerHTML += `<p>${prepared}</p>`;
+    history.innerHTML += `<pre>${prepared}</pre>`;
     // history.scrollTop = history.scrollHeight;
     newLine();
 }

@@ -5,21 +5,22 @@ const simpleEditor = document.getElementById('simple-editor');
 // const previousCommands = document.getElementById('previous-commands');
 const fileName = document.getElementById('the-input');
 
-function addResponse(response) {
+function editFile(name, contents) {
     // simpleEditor.innerText = response;
     // simpleEditor.value = response;
-    editInMonaco(fileName.value, response);
+    editInMonaco(name, contents);
 }
 
-function selectFile(file) {
+function selectFile(fileName) {
     const postData = {
-        file,
+        file: fileName,
         action: 'getFile',
     }
+    console.log(postData);
     // manageFile(command).then((response) => {
     manageFile(postData).then((response) => {
         // console.log(response);
-        addResponse(response);
+        editFile(fileName, response);
     });
 }
 

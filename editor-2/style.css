@@ -1,5 +1,5 @@
 * {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -9,45 +9,69 @@ body {
     color: white;
 }
 main {
-    /* border: 5px solid gray; */
-    /* margin: 0.3rem; */
     display: flex;
 }
 #filetree {
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    /* font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; */
+    /* border-right: solid 1px #00ff66; */
+    /* overflow-y: auto; */
+    /* overflow-x: hidden; */
+    overflow: auto;
+    height: 100vh;
+    /* width: fit-content; */
+    /* max-width: 10em; */
+    width: 9em;
+}
+#filetree div {
+    /* overflow: visible; */
+    min-width: fit-content;
 }
 .dir-name {
-    font-weight: bold;
+    color: #00ff66;
+    /* font-weight: bold; */
     /* text-decoration: underline; */
 }
 /* .dir-cont { */
 .dir {
     /* border-left: solid 3px green;
     border-bottom: solid 3px green; */
-    border: solid 2px green;
-    margin: 2px;
-    /* margin-left: 0.3em; */
-    padding: 0.1em;
-    /* padding-left: 0.3em; */
+    border: solid 0px #00ff66;
+    border-right: none;
+    margin-bottom: 0.15em;
+    margin-top: 0.15em;
+    
+    /* min-width: fit-content;
+    max-width: 10em; */
 }
 #root-dir {
-    margin-left: 0;
+    /* margin-left: 0; */
+    border-right: solid 1px #00ff66;
+    margin-top: 0;
 }
 .dir-cont {
-    margin-left: 0.3em;
+    margin-left: 0.4em;
+    /* padding-right: 0.2em; */
+}
+.dir p {
+    /* padding-right: 0.2em; */
+    padding-inline: 0.2em;
+    white-space: nowrap;
 }
 #editor-plus {
     flex: 1;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+}
+#file-status {
+    display: flex;
+}
+#unsaved {
+    width: 1em;
+    height: 1em;
+    margin-inline: 0.2rem;
 }
 .editor {
-/* #monaco { */
-    width: 100%;
-    height: 85vh;
-    margin-bottom: 0.2em;
-    /* padding: 0.2em; */
-    color: white;
-    background-color: black;
-    /* overflow: auto; */
+    border: solid 2px black;
 }
 #prev-container {
     display: flex;

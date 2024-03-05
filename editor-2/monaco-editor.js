@@ -24,6 +24,9 @@ function editInMonaco(filePath, fileContent) {
             models[filePath] = model;
         });
     }
+
+    return model;
 }
 
-// editInMonaco('./t.php', '<?php \n echo "here we go!!!"');
+// monacoEditor.onDidChangeModelContent((a) => console.log(a));
+// monacoEditor.getModel().onDidChangeContent((event) => {});

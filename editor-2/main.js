@@ -4,12 +4,38 @@
 const simpleEditor = document.getElementById('simple-editor');
 // const previousCommands = document.getElementById('previous-commands');
 const fileName = document.getElementById('the-input');
+const unsaved = document.getElementById('unsaved');
+
+let currentModel = null;
 
 function editFile(name, contents) {
     // simpleEditor.innerText = response;
     // simpleEditor.value = response;
-    editInMonaco(name, contents);
+    currentModel = editInMonaco(name, contents);
+    fileName.value = name;
+    console.log(currentModel);
 }
+
+const unsavedChanges = {
+    add() {
+        unsaved.style.backgroundColor = 'red';
+    },
+    remove() {
+        console.log('saved1111');
+        unsaved.style.backgroundColor = '';
+    }
+}
+
+setInterval(() => {
+    // console.log(currentModel.isDirty());
+    // console.log(currentModel.isDirty);
+    currentModel?.onDidChangeContent((event) => {
+        // console.log(event);
+        console.log('changes!');
+        // unsaved.innerText = '#';
+        unsavedChanges.add();
+    });
+}, 1000);
 
 function selectFile(fileName) {
     const postData = {
@@ -47,8 +73,7 @@ function save() {
     console.log(postData);
 
     manageFile(postData).then((response) => {
-        // console.log(response);
-        // addResponse(response);
+        unsavedChanges.remove();
     });
 }
 
@@ -91,8 +116,9 @@ function updateFileTree(baseDir) {
             const fullPath = `${baseDir}/${dir}`;
             // const id = (`${baseDir}/${dir}`).substring(1);
             const id = (`${baseDir}/${dir}`)
-                .replace('.', 'root')
-                .replaceAll('/', '--');
+                // .replace('./', 'root/')
+                .replaceAll('.', '-dot-')
+                .replaceAll('/', '-S-');
             const tag = `
                 <div class="dir" id="${id}">
                     <p class="dir-name" onclick="updateFileTree('${fullPath}')">${dir}</p>
@@ -112,14 +138,17 @@ function updateFileTree(baseDir) {
         // dirCont += '</div>';
         // document.getElementById(baseDir).innerHTML += dirCont;
         // let id = baseDir.substring(1);
-        let id = baseDir.replace('.', 'root').replaceAll('/', '--');;
+        // let id = baseDir.replace('./', 'root/').replaceAll('/', '--');;
+        let id = baseDir.replaceAll('.', '-dot-').replaceAll('/', '-S-');
         // if(baseDir === '.') {
         //     baseDir = 'root-dir';
         // }
-        if(id === 'root') {
+        if(id === '-dot-') {
             id = 'root-dir';
         }
+        console.log(`#${id} .dir-cont`);
         document.querySelector(`#${id} .dir-cont`).innerHTML = dirCont;
+        document.getElementById(id).style.borderWidth = '1px';
         // document.querySelector(`#rrr .dir-cont`).innerHTML = dirCont;
         // document.querySelector(`#root-dir .dir-cont`).innerHTML = dirCont;
         // const newCont = `

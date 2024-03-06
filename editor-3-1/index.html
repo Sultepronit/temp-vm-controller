@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.1 editor</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="node_modules/monaco-editor/min/vs/loader.js"></script>
+    <script src="monaco-editor.js"></script>
+    <script src="api.js" defer></script>
+    <script src="fileTree.js"></script>
+    <script src="main.js" defer></script>
+    
+</head>
+<body>
+    
+    <main>
+        <aside id="filetree">
+            <!-- <div class="dir" id="."> -->
+            <div class="dir" id="root-dir">
+                <p class="dir-name">root</p>
+                <!-- <div class="dir-cont"></div> -->
+            </div>
+        </aside>
+        <div id="editor-plus">
+            <input id="the-input" class="input-area"></input>
+            <div id="file-status">
+                <p id="unsaved"></p>
+                <button id="save">save</button>
+                <button id="toggle-terminal">terminal</button>
+            </div>
+
+            <div id="monaco" class="editor"></div>
+
+            <iframe class="terminal" src="http://34.116.243.6:8080/"></iframe>
+        </div>
+    </main>
+</body>
+</html>

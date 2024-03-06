@@ -1,0 +1,92 @@
+* {
+    font-size: 1.15rem;
+    /* font-size: 0.9rem; */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: rgb(48, 48, 48);
+    color: white;
+}
+abbr {
+    text-decoration: none;
+}
+main {
+    display: flex;
+}
+#filetree {
+    overflow: auto;
+    height: 100vh;
+    width: 9em;
+}
+#filetree div {
+    min-width: fit-content;
+}
+
+.dir-name {
+    color: #00ff66;
+    width: fit-content;
+}
+.dir-cont {
+    min-height: 0.4em;
+    margin-left: 0.4em;
+    border: solid 1px #00ff66;
+}
+.dir p {
+    padding-inline: 0.15em;
+    white-space: nowrap;
+}
+#editor-plus {
+    flex: 1;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+}
+#file-status {
+    display: flex;
+}
+#unsaved {
+    width: 1em;
+    height: 1em;
+    margin-inline: 0.2rem;
+}
+.input-area {
+    width: 100%;
+    padding-inline: 0.2em;
+    margin-bottom: 0.2rem;
+    color: white;
+    background-color: black;
+}
+.editor {
+    border: solid 2px black;
+}
+.terminal {
+    /* display: none; */
+    width: 100%;
+    height: 50vh;
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+}
+/* #prev-container {
+    display: flex;
+    margin-bottom: 0.2em;
+}
+
+#clear-prev {
+    margin-left: 0.2rem;
+    padding: 0.1rem;
+}
+.swift-commands button {
+    padding-inline: 0.5em;
+}
+.red {
+    color: red;
+}
+
+.yellow {
+    color: yellow;
+}
+.comp-green {
+    color: #43ff00;
+} */

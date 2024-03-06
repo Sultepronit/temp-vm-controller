@@ -7,13 +7,15 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/ttyd@1.6.2/dist/ttyd.min.js"></script> -->
 </head>
 <body>
-  <div id="tabContainer">
+  <div id="tabContainer"></div>
+  <div id="tabContainer2">
     <!-- <button onclick="openTab('http://34.116.243.6:8080/')">Open Tab</button> -->
   </div>
+  <iframe src="http://34.116.243.6:8080/" style="width: 100%; height: 400px;"></iframe>
 
     <script>
-        function openTab(url) {
-          var tabContainer = document.getElementById('tabContainer');
+        function openTab(container, url) {
+          var tabContainer = document.getElementById(container);
           
           // Create a new iframe element
           var iframe = document.createElement('iframe');
@@ -28,7 +30,7 @@
           // Add the iframe to the tab container
           tabContainer.appendChild(iframe);
         }
-        openTab('http://34.116.243.6:8080/');
+        openTab('tabContainer2', 'http://34.116.243.6:8080/');
       </script>
 </body>
 </html>

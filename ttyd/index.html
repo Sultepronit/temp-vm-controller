@@ -4,26 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ttyd!</title>
-    <script src="https://cdn.jsdelivr.net/npm/ttyd@1.6.2/dist/ttyd.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/ttyd@1.6.2/dist/ttyd.min.js"></script> -->
 </head>
 <body>
-    <div id="terminalContainer"></div>
+  <div id="tabContainer">
+    <!-- <button onclick="openTab('http://34.116.243.6:8080/')">Open Tab</button> -->
+  </div>
 
     <script>
-        // Select the terminal container element
-        var terminalContainer = document.getElementById('terminalContainer');
-      
-        // Initialize TTYD terminal within the container
-        var terminal = new TTYD.Terminal({
-          shell: '/bin/bash', // Specify the shell you want to use
-          cwd: '/', // Specify the initial working directory
-          token: 'your_secret_token', // Specify a secret token for authentication (optional)
-          cols: 80, // Specify the number of columns
-          rows: 24 // Specify the number of rows
-        });
-      
-        // Mount the terminal to the container
-        terminal.open(terminalContainer);
+        function openTab(url) {
+          var tabContainer = document.getElementById('tabContainer');
+          
+          // Create a new iframe element
+          var iframe = document.createElement('iframe');
+          
+          // Set the source URL for the iframe
+          iframe.src = url;
+          
+          // Set attributes for styling and behavior (optional)
+          iframe.style.width = '100%';
+          iframe.style.height = '400px'; // Adjust height as needed
+          
+          // Add the iframe to the tab container
+          tabContainer.appendChild(iframe);
+        }
+        openTab('http://34.116.243.6:8080/');
       </script>
 </body>
 </html>

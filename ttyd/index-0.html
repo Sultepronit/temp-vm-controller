@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ttyd!</title>
+    <script src="https://cdn.jsdelivr.net/npm/ttyd@1.6.2/dist/ttyd.min.js"></script>
+</head>
+<body>
+    <div id="terminalContainer"></div>
+
+    <script>
+        // Select the terminal container element
+        var terminalContainer = document.getElementById('terminalContainer');
+      
+        // Initialize TTYD terminal within the container
+        var terminal = new TTYD.Terminal({
+          shell: '/bin/bash', // Specify the shell you want to use
+          cwd: '/', // Specify the initial working directory
+          token: 'your_secret_token', // Specify a secret token for authentication (optional)
+          cols: 80, // Specify the number of columns
+          rows: 24 // Specify the number of rows
+        });
+      
+        // Mount the terminal to the container
+        terminal.open(terminalContainer);
+      </script>
+</body>
+</html>

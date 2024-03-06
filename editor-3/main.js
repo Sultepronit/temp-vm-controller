@@ -75,11 +75,19 @@ function save() {
     });
 }
 
+function toggleTerminal() {
+    // console.log('toggling!');
+    const terminal = document.querySelector('.terminal');
+    // console.log(terminal);
+    // terminal.style.display = 'block';
+    terminal.style.display = terminal.style.display == 'none' ? 'block' : 'none';
+}
+
 // document.addEventListener('keyup', event => {
 document.addEventListener('keydown', event => {
     if(event.ctrlKey && event.key === 's') {
         event.preventDefault();
-        console.log('saving!');
+        // console.log('saving!');
         save();
     }
 });
@@ -87,6 +95,14 @@ document.addEventListener('keydown', event => {
 document.getElementById('save')
     .addEventListener('click', () => save());
 
-fileName.focus();
+document.getElementById('toggle-terminal')
+    .addEventListener('click', () => toggleTerminal());
+
+// fileName.focus();
 
 updateFileTree('.');
+setTimeout(() => {
+    toggleTerminal();
+}, 500);
+
+

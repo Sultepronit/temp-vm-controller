@@ -1,4 +1,4 @@
-const url = 'http://34.116.243.6/temp-vm-controller/main.php';
+const url = '../main.php';
 
 const password = 'pass';
 

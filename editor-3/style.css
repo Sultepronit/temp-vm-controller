@@ -8,53 +8,32 @@ body {
     background-color: rgb(48, 48, 48);
     color: white;
 }
+abbr {
+    text-decoration: none;
+}
 main {
     display: flex;
 }
 #filetree {
-    /* font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; */
-    /* border-right: solid 1px #00ff66; */
-    /* overflow-y: auto; */
-    /* overflow-x: hidden; */
     overflow: auto;
     height: 100vh;
-    /* width: fit-content; */
-    /* max-width: 10em; */
     width: 9em;
 }
 #filetree div {
-    /* overflow: visible; */
     min-width: fit-content;
 }
+
 .dir-name {
     color: #00ff66;
-    /* font-weight: bold; */
-    /* text-decoration: underline; */
-}
-/* .dir-cont { */
-.dir {
-    /* border-left: solid 3px green;
-    border-bottom: solid 3px green; */
-    border: solid 0px #00ff66;
-    border-right: none;
-    margin-bottom: 0.15em;
-    margin-top: 0.15em;
-    
-    /* min-width: fit-content;
-    max-width: 10em; */
-}
-#root-dir {
-    /* margin-left: 0; */
-    border-right: solid 1px #00ff66;
-    margin-top: 0;
+    width: fit-content;
 }
 .dir-cont {
+    min-height: 0.4em;
     margin-left: 0.4em;
-    /* padding-right: 0.2em; */
+    border: solid 1px #00ff66;
 }
 .dir p {
-    /* padding-right: 0.2em; */
-    padding-inline: 0.2em;
+    padding-inline: 0.15em;
     white-space: nowrap;
 }
 #editor-plus {

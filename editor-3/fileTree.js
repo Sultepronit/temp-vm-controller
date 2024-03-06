@@ -12,18 +12,41 @@ function pathToId(path) {
     return id;
 }
 
+const expandedDirStyle = {
+    selectElement(id) {
+        return {
+            baseDirElement: document.getElementById(id),
+            dirNameElement: document.querySelector(`#${id} .dir-name`)
+        }
+    },
+    add(id) {
+        const { baseDirElement, dirNameElement } = this.selectElement(id);
+        baseDirElement.style.margin = '0.1em 0 0.2em';
+
+        dirNameElement.style.color = 'black';
+        dirNameElement.style.fontWeight = 'bold';
+        dirNameElement.style.background = '#00ff66';
+    },
+    remove(id) {
+        const { baseDirElement, dirNameElement } = this.selectElement(id);
+        baseDirElement.style.margin = '0';
+
+        dirNameElement.style.color = '#00ff66';
+        dirNameElement.style.fontWeight = '';
+        dirNameElement.style.background = '';
+    }
+}
+
 const expandedDirs = [];
 function toggleDirContent(path) {
-    console.log('Go!');
-    if(expandedDirs.includes(path)) {
-        console.log('Time to hide!');
-
+    const theIndex = expandedDirs.indexOf(path);
+    // if(expandedDirs.includes(path)) {
+    if(theIndex >= 0) {
         const id = pathToId(path);
-        document.querySelector(`#${id} .dir-cont`).innerHTML = '';
-        document.getElementById(id).style.borderWidth = '0';
+        document.querySelector(`#${id} .dir-cont`).outerHTML = '';
+        expandedDirStyle.remove(id);
 
-        delete expandedDirs[path];
-        console.log(expandedDirs);
+        delete expandedDirs[theIndex];
     } else {
         updateFileTree(path);
         expandedDirs.push(path);
@@ -41,17 +64,16 @@ function updateFileTree(baseDir) {
     sendRequest(postData).then((response) => {
         const treeObject = JSON.parse(response);
         // console.log(treeObject);
-
-        // theDir.innerHTML = '<div class="dir-cont"></div>';
-        // let dirCont = '<div class="dir-cont">';
-        let dirCont = '';
+ 
+        let dirCont = '<div class="dir-cont">';
         for(const dir of treeObject.directories) {
             const fullPath = `${baseDir}/${dir}`;
             const id = pathToId(fullPath);
             const tag = `
                 <div class="dir" id="${id}">
-                    <p class="dir-name" onclick="toggleDirContent('${fullPath}')">${dir}</p>
-                    <div class="dir-cont"></div>
+                    <p class="dir-name" onclick="toggleDirContent('${fullPath}')">
+                        <abbr title=${fullPath}>${dir}</abbr>
+                    </p>
                 </div>
             `;
             dirCont += tag;
@@ -59,12 +81,18 @@ function updateFileTree(baseDir) {
 
         for(const file of treeObject.files) {
             const fullPath = `${baseDir}/${file}`;
-            dirCont += `<p onclick="selectFile('${fullPath}')">${file}</p>`;
+            dirCont += `
+                <p onclick="selectFile('${fullPath}')">
+                    <abbr title=${fullPath}>${file}</abbr>
+                </p>
+            `;
         }
+        dirCont += '</div>';
 
         let id = pathToId(baseDir);
         
-        document.querySelector(`#${id} .dir-cont`).innerHTML = dirCont;
-        document.getElementById(id).style.borderWidth = '1px';
+        const baseDirElement = document.getElementById(id);
+        baseDirElement.innerHTML += dirCont;
+        expandedDirStyle.add(id);
     }); 
 }

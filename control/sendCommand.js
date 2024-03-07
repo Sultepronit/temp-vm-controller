@@ -1,6 +1,6 @@
 // const url = 'http://localhost:7979/';
 // const url = 'http://34.116.243.6/remote.php';
-const url = 'http://34.116.243.6/temp-vm-controller/remote.php';
+const url = '/remote.php';
 
 const password = 'pass';
 

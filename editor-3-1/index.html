@@ -8,7 +8,7 @@
     <script src="node_modules/monaco-editor/min/vs/loader.js"></script>
     <script src="monaco-editor.js"></script>
     <script src="api.js" defer></script>
-    <script src="fileTree.js"></script>
+    <script src="fileTree.js" defer></script>
     <script src="main.js" defer></script>
     
 </head>
@@ -17,22 +17,26 @@
     <main>
         <aside id="filetree">
             <!-- <div class="dir" id="."> -->
-            <div class="dir" id="root-dir">
-                <p class="dir-name">root</p>
+            <div id="root-dir" class="dir">
+                <p class="dir-name filename" onclick="selectItem('dir','.')">root</p>
                 <!-- <div class="dir-cont"></div> -->
             </div>
         </aside>
         <div id="editor-plus">
-            <input id="the-input" class="input-area"></input>
-            <div id="file-status">
-                <p id="unsaved"></p>
-                <button id="save">save</button>
+            <div id="common-actions">
                 <button id="toggle-terminal">terminal</button>
+            </div>
+
+            <div id="file-status">
+                <!-- <p id="unsaved"></p> -->
+                <!-- <input id="the-input" class="input-area"></input> -->
+                <p id="working-path">working path!</p>
+                <button id="save">save</button>
             </div>
 
             <div id="monaco" class="editor"></div>
 
-            <iframe class="terminal" src="http://34.116.243.6:8080/"></iframe>
+            <iframe class="terminal" src="http://34.116.135.5:8080/"></iframe>
         </div>
     </main>
 </body>

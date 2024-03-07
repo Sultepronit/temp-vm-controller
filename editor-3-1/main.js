@@ -1,36 +1,27 @@
 "use strict";
-
-const simpleEditor = document.getElementById('simple-editor');
-// const previousCommands = document.getElementById('previous-commands');
-const fileName = document.getElementById('the-input');
-const unsaved = document.getElementById('unsaved');
+// const unsaved = document.getElementById('unsaved');
+const editorElement = document.querySelector('.editor');
 
 let currentModel = null;
 
 function editFile(name, contents) {
-    // simpleEditor.innerText = response;
-    // simpleEditor.value = response;
     currentModel = editInMonaco(name, contents);
-    fileName.value = name;
-    console.log(currentModel);
 }
 
 const unsavedChanges = {
     add() {
-        unsaved.style.backgroundColor = 'red';
+        // unsaved.style.backgroundColor = 'red';
+        editorElement.style.borderColor = 'red';
     },
     remove() {
-        unsaved.style.backgroundColor = '';
+        // unsaved.style.backgroundColor = '';
+        editorElement.style.borderColor = 'white';
     }
 }
 
 setInterval(() => {
-    // console.log(currentModel.isDirty());
-    // console.log(currentModel.isDirty);
     currentModel?.onDidChangeContent((event) => {
-        // console.log(event);
-        console.log('changes!');
-        // unsaved.innerText = '#';
+        // console.log('changes!');
         unsavedChanges.add();
     });
 }, 1000);
@@ -40,22 +31,10 @@ function selectFile(fileName) {
         file: fileName,
         action: 'getFile',
     }
-    console.log(postData);
-    // sendRequest(command).then((response) => {
     sendRequest(postData).then((response) => {
-        // console.log(response);
         editFile(fileName, response);
     });
 }
-
-fileName.addEventListener('keyup', (event) => {
-    if(event.key === 'Enter' && !event.shiftKey) {
-        const command = fileName.value;
-        // addCommand(theInput.value);
-        selectFile(command);
-        // theInput.value = '';
-    }
-});
 
 const windowHeight = window.innerHeight;
 
@@ -63,7 +42,7 @@ function save() {
     console.log('saving');
     // console.log(simpleEditor.value);
     const postData = {
-        file: fileName.value,
+        file: selectedItem.path,
         action: 'saveFile',
         // contents: simpleEditor.value
         contents: monacoEditor.getValue()
@@ -100,7 +79,8 @@ document.getElementById('toggle-terminal')
 
 // fileName.focus();
 
-updateFileTree('.');
+// updateFileTree('.');
+selectItem('dir', '.');
 setTimeout(() => {
     toggleTerminal();
 }, 500);

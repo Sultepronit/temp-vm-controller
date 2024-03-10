@@ -16,7 +16,9 @@ function toggleTerminal() {
 document.getElementById('toggle-terminal')
     .addEventListener('click', () => toggleTerminal());
 
-selectItem('dir', '.');
+createRoot('.', 'root');
+// createRoot('./editor-3-2', 'editor-3-2');
+
 setTimeout(() => {
     toggleTerminal();
 }, 500);

@@ -38,16 +38,16 @@ function findNamesakes(files) {
     }
 }
 
-const editedFilesList = document.getElementById('edited-list');
-function renderEditedFilesList() {
+const tabsElement = document.getElementById('tabs');
+function renderTabs() {
     findNamesakes(openedFiles);
 
-    editedFilesList.innerHTML = '';
+    tabsElement.innerHTML = '';
     
     let index = 0;
     for(const file of openedFiles) {
         const addClass = file.changed ? 'unsaved-tab' : '';
-        editedFilesList.innerHTML += `
+        tabsElement.innerHTML += `
             <span
                 id="tab-${pathToId(file.path)}"
                 class="file-tab ${addClass}"
@@ -100,7 +100,7 @@ async function selectFile(filePath) {
     highlightChanges(currentFile.changed);
 
     // console.log(openedFiles);
-    renderEditedFilesList();
+    renderTabs();
 }
 
 
@@ -110,10 +110,9 @@ function closeFile(index) {
     openedFiles[index].model.dispose();
     openedFiles.splice(index, 1);
     
-    if(index === 0) {
-        console.log()
+    if(index === 0 && openedFiles.length > 0) {
         selectItem('file', openedFiles[0].path);
     } else {
-        renderEditedFilesList();
+        renderTabs();
     }
 }

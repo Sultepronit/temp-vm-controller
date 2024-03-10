@@ -1,6 +1,4 @@
 "use strict";
-console.log('saving!');
-
 const editorElement = document.querySelector('.editor');
 
 function highlightChanges(areUnsaved) {

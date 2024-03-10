@@ -42,17 +42,25 @@ const selectedItem = {
     path: ''
 };
 
+const monacoElement = document.getElementById('monaco');
+
 function selectItem(type, path) {
     if(type === 'dir') {
         toggleDirContent(path);
     }
-
+    // console.log(1);
     if(selectedItem.path === path) {
         return;
     }
-
+    // console.log(2);
     if(type === 'file') {
         selectFile(path);
+        // monacoElement.classList.remove('hide');
+        folder.classList.add('hide');
+    } else { // dir
+        // selectDir(path);
+        folder.classList.remove('hide');
+        // monacoElement.classList.add('hide');
     }
 
     workingPath.innerText = path;
@@ -106,47 +114,59 @@ function toggleDirContent(path) {
     }
 }
 
-function updateDirCont(baseDir) {
-   // const baseDir = '.';
+function createDirTag(path, dirName) {
+    const id = pathToId(path);
+    const tag = `
+        <div id="${id}" class="dir">
+            <p class="dir-name filename" onclick="selectItem('dir','${path}')">
+                <abbr title=${path}>${dirName}</abbr>
+            </p>
+        </div>
+    `;
+    return tag;
+}
+
+function createRoot(path, dirName) {
+    const filetree = document.getElementById('filetree');
+    filetree.innerHTML = createDirTag(path, dirName);
+    selectItem('dir', path);
+}
+
+function treeDirContUpdate(baseDir, dirContObject) {
+    let dirCont = '<div class="dir-cont">';
+    for(const dir of dirContObject.directories) {
+        const fullPath = `${baseDir}/${dir}`;
+        dirCont += createDirTag(fullPath, dir);
+    }
+
+    for(const file of dirContObject.files) {
+        const fullPath = `${baseDir}/${file}`;
+        const id = pathToId(fullPath);
+        dirCont += `
+            <p id="${id}" class="filename" onclick="selectItem('file', '${fullPath}')">
+                <abbr title=${fullPath}>${file}</abbr>
+            </p>
+        `;
+    }
+    dirCont += '</div>';
+
+    let id = pathToId(baseDir);
+    
+    const baseDirElement = document.getElementById(id);
+    baseDirElement.innerHTML += dirCont;
+    expandedDirStyle.add(id);
+}
+
+async function updateDirCont(dirName) {
     const postData = {
         action: 'getFileTree',
-        baseDir
+        baseDir: dirName
     }
     console.log(postData);
 
-    sendRequest(postData).then((response) => {
-        const treeObject = JSON.parse(response);
-        // console.log(treeObject);
+    const resp = await sendRequest(postData);
+    const dirContObject = JSON.parse(resp);
  
-        let dirCont = '<div class="dir-cont">';
-        for(const dir of treeObject.directories) {
-            const fullPath = `${baseDir}/${dir}`;
-            const id = pathToId(fullPath);
-            const tag = `
-                <div id="${id}" class="dir">
-                    <p class="dir-name filename" onclick="selectItem('dir','${fullPath}')">
-                        <abbr title=${fullPath}>${dir}</abbr>
-                    </p>
-                </div>
-            `;
-            dirCont += tag;
-        }
-
-        for(const file of treeObject.files) {
-            const fullPath = `${baseDir}/${file}`;
-            const id = pathToId(fullPath);
-            dirCont += `
-                <p id="${id}" class="filename" onclick="selectItem('file', '${fullPath}')">
-                    <abbr title=${fullPath}>${file}</abbr>
-                </p>
-            `;
-        }
-        dirCont += '</div>';
-
-        let id = pathToId(baseDir);
-        
-        const baseDirElement = document.getElementById(id);
-        baseDirElement.innerHTML += dirCont;
-        expandedDirStyle.add(id);
-    }); 
+    treeDirContUpdate(dirName, dirContObject);
+    folderContUpdate(dirName, dirContObject);
 }

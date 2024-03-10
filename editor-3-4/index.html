@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3.2 editor</title>
+    <title>3.4 editor</title>
     <link rel="stylesheet" href="style.css">
     <script src="node_modules/monaco-editor/min/vs/loader.js"></script>
     <script src="js/monaco-editor.js"></script>
+    <script src="js/manage-folder.js" defer></script>
     <script src="js/open-files.js" defer></script>
     <script src="js/save-changes.js" defer></script>
     <script src="js/api.js" defer></script>
@@ -18,28 +19,28 @@
     
     <main>
         <aside id="filetree">
-            <!-- <div class="dir" id="."> -->
-            <div id="root-dir" class="dir">
+            <!-- <div id="root-dir" class="dir">
                 <p class="dir-name filename" onclick="selectItem('dir','.')">root</p>
-                <!-- <div class="dir-cont"></div> -->
-            </div>
+            </div> -->
         </aside>
-        <div id="editor-plus">
+        <div id="main-area">
             <div id="common-actions">
                 <button id="toggle-terminal">terminal</button>
             </div>
 
             <div id="edited-files">
-                <div id="edited-list">
-                    <p>~</p>
-                </div>
+                <div id="tabs"></div>
                 <div id="file-status">
                     <p id="working-path"></p>
                     <button id="save">save</button>
                 </div>
             </div>
 
-            <div id="monaco" class="editor"></div>
+            <div id="main-pannel">
+                <div id="folder"></div>
+                <div id="monaco" class="editor"></div>
+            </div>
+            
 
             <iframe class="terminal" src="http://34.116.135.5:8080/"></iframe>
         </div>

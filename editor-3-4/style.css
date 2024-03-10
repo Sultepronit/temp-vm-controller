@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: rgb(48, 48, 48);
+    color: white;
+    font-size: 1.15rem;
+}
+abbr {
+    text-decoration: none;
+}
+main {
+    /* display: flex; */
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+#filetree {
+    overflow: auto;
+    height: 100vh;
+    width: 10em;
+}
+#filetree div {
+    min-width: fit-content;
+}
+
+.dir-name {
+    color: #00ff66;
+    width: fit-content;
+}
+.dir-cont {
+    min-height: 0.4em;
+    margin-left: 0.4em;
+    border: solid 1px #00ff66;
+}
+.filename {
+    padding-inline: 0.15em;
+    white-space: nowrap;
+    font-size: 1em;
+}
+
+#editor-plus {
+    /* flex: 1; */
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    position: relative;
+    margin-left: 3px;
+}
+#edited-list {
+    /* display: flex; */
+    margin-block: 3px;
+    height: 1.2em;
+    overflow: auto;
+}
+.file-tab {
+    /* margin-inline: 0.2em; */
+    margin-right: 0.2em;
+    padding-inline: 0.2em;
+    /* padding-block: 1px; */
+    /* border: solid 1px gray; */
+    /* border: solid 1px white; */
+    /* background: black; */
+    color: black;
+    background: gainsboro;
+    white-space: nowrap;
+}
+
+.close-file {
+    font-size: 0.8em;
+    padding-inline: 0.1em;
+    cursor: pointer;
+}
+
+.unsaved-tab {
+    background: pink;
+}
+
+.name-prefix {
+    /* color: yellow; */
+    color: #002ac8;
+    font-style: italic;
+}
+
+#file-status {
+    display: flex;
+}
+
+#working-path {
+    background: black;
+    width: 100%;
+    padding-inline: 0.2em;
+}
+.editor {
+    /* border: solid 1px white; */
+    border-top: solid 2px gray;
+}
+.unsaved {
+    border-color: pink;
+}
+
+.terminal {
+    /* display: none; */
+    width: 100%;
+    height: 50vh;
+    /* position: fixed; */
+    position: absolute;
+    z-index: 100;
+    bottom: 0;
+}

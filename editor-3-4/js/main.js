@@ -1,7 +1,10 @@
 "use strict";
 
-console.log(window.location);
-const myHref = window.location.href;
+const terminal = document.querySelector('.terminal');
+
+const theLocation = window.location;
+console.log(location);
+const myHref = location.href;
 console.log(myHref);
 
 const lastSlash = myHref.substring(0, myHref.length - 1).lastIndexOf("/");
@@ -9,8 +12,11 @@ const fileRoot = myHref.substring(0, lastSlash);
 console.log(fileRoot);
 
 function toggleTerminal() {
-    const terminal = document.querySelector('.terminal');
-    terminal.style.display = terminal.style.display == 'none' ? 'block' : 'none';
+    if(terminal.classList.contains('z-top')) {
+        terminal.classList.remove('z-top');
+    } else {
+        terminal.classList.add('z-top');
+    }
 }
 
 document.getElementById('toggle-terminal')
@@ -20,7 +26,7 @@ createRoot('.', 'root');
 // createRoot('./editor-3-2', 'editor-3-2');
 
 setTimeout(() => {
-    toggleTerminal();
-}, 500);
-
+    terminal.src = `http://${location.hostname}:8080`;
+    console.log(terminal);
+}, 4000);
 

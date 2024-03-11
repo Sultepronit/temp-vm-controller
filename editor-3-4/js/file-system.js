@@ -14,94 +14,101 @@ function pathToId(path) {
 }
 
 const selectedDecoration = {
-    selectElement({type, path}) {
-        if(!path) {
-            return null;
-        }
-        // console.log(type, path);
-        const id = pathToId(path);
-        return type === 'file' ? document.getElementById(id)
-            : document.querySelector(`#${id} .dir-name`);
+    selectElement(path) {
+        if(!path) return;
+        return document.querySelector(`#${pathToId(path)} .the-name`);
     },
-    add(item) {
-        const theElement = this.selectElement(item);
-        if(!theElement) return;
-
-        theElement.style.textDecoration = 'underline';
+    add(path) {
+        const theItem = this.selectElement(path);
+        if(!theItem) return;
+        theItem.classList.add('selected-item');
     },
-    remove(item) {
-        const theElement = this.selectElement(item);
-        if(!theElement) return;
-
-        theElement.style.textDecoration = 'none';
+    remove(path) {
+        const theItem = this.selectElement(path);
+        if(!theItem) return;
+        theItem.classList.remove('selected-item');
     }
 }
+
+// const monacoElement = document.getElementById('monaco');
 
 const selectedItem = {
     type: '',
     path: ''
 };
-
-const monacoElement = document.getElementById('monaco');
-
 function selectItem(type, path) {
     if(type === 'dir') {
-        toggleDirContent(path);
+        // toggleDirContent(path);
+        selectDir(path);
     }
-    // console.log(1);
+
     if(selectedItem.path === path) {
         return;
     }
-    // console.log(2);
+
     if(type === 'file') {
         selectFile(path);
-        // monacoElement.classList.remove('hide');
         folder.classList.add('hide');
     } else { // dir
         // selectDir(path);
         folder.classList.remove('hide');
-        // monacoElement.classList.add('hide');
     }
 
     workingPath.innerText = path;
 
-    selectedDecoration.remove(selectedItem);
+    selectedDecoration.add(path);
+    selectedDecoration.remove(selectedItem.path);
 
-    selectedItem.type = type;
+    // selectedItem.type = type;
     selectedItem.path = path;
-    
-    selectedDecoration.add(selectedItem);
 }
 
 const expandedDirStyle = {
     selectElement(id) {
         return {
             baseDirElement: document.getElementById(id),
-            dirNameElement: document.querySelector(`#${id} .dir-name`)
+            dirNameElement: document.querySelector(`#${id} .dir-name`),
+            toggleCont: document.querySelector(`#${id} .toggle-cont`)
         }
     },
     add(id) {
-        const { baseDirElement, dirNameElement } = this.selectElement(id);
+        const { baseDirElement, dirNameElement, toggleCont } = this.selectElement(id);
         baseDirElement.style.margin = '0.1em 0 0.2em';
 
         dirNameElement.style.color = 'black';
         dirNameElement.style.fontWeight = 'bold';
         dirNameElement.style.background = '#00ff66';
+
+        toggleCont.innerText = '-';
     },
     remove(id) {
-        const { baseDirElement, dirNameElement } = this.selectElement(id);
+        const { baseDirElement, dirNameElement, toggleCont } = this.selectElement(id);
         baseDirElement.style.margin = '0';
 
         dirNameElement.style.color = '#00ff66';
         dirNameElement.style.fontWeight = '';
         dirNameElement.style.background = '';
+
+        toggleCont.innerText = '+';
     }
 }
 
 const expandedDirs = [];
+
+function selectDir(path) {
+    console.log('selectDir()');
+    const theIndex = expandedDirs.indexOf(path);
+    if(theIndex >= 0) {
+        const id = pathToId(path);
+        document.querySelector(`#${id} .dir-cont`).outerHTML = '';
+    } else {
+        expandedDirs.push(path);
+    }
+    updateDirCont(path);
+}
+
 function toggleDirContent(path) {
     const theIndex = expandedDirs.indexOf(path);
-    // if(expandedDirs.includes(path)) {
     if(theIndex >= 0) {
         const id = pathToId(path);
         document.querySelector(`#${id} .dir-cont`).outerHTML = '';
@@ -109,8 +116,7 @@ function toggleDirContent(path) {
 
         delete expandedDirs[theIndex];
     } else {
-        updateDirCont(path);
-        expandedDirs.push(path);
+        selectItem('dir', path);
     }
 }
 
@@ -118,8 +124,15 @@ function createDirTag(path, dirName) {
     const id = pathToId(path);
     const tag = `
         <div id="${id}" class="dir">
-            <p class="dir-name filename" onclick="selectItem('dir','${path}')">
-                <abbr title=${path}>${dirName}</abbr>
+            <p class="dir-name filename">
+                <span class="toggle-cont" onclick="toggleDirContent('${path}')">+</span>
+                <abbr 
+                    title=${path}
+                    class="the-name"
+                    onclick="selectItem('dir','${path}')"
+                >
+                    ${dirName}
+                </abbr>
             </p>
         </div>
     `;
@@ -144,7 +157,7 @@ function treeDirContUpdate(baseDir, dirContObject) {
         const id = pathToId(fullPath);
         dirCont += `
             <p id="${id}" class="filename" onclick="selectItem('file', '${fullPath}')">
-                <abbr title=${fullPath}>${file}</abbr>
+                <abbr title=${fullPath} class="the-name">${file}</abbr>
             </p>
         `;
     }

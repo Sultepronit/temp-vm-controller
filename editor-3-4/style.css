@@ -17,6 +17,7 @@ main {
     display: grid;
     grid-template-columns: auto 1fr;
 }
+
 #filetree {
     overflow: auto;
     height: 100vh;
@@ -26,19 +27,30 @@ main {
     min-width: fit-content;
 }
 
+.filename {
+    padding-inline: 0.15em;
+    white-space: nowrap;
+    /* font-size: 1em; */
+    cursor: pointer;
+}
+
 .dir-name {
     color: #00ff66;
     width: fit-content;
+}
+.toggle-cont {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-weight: bold;
+    cursor: pointer;
 }
 .dir-cont {
     min-height: 0.4em;
     margin-left: 0.4em;
     border: solid 1px #00ff66;
 }
-.filename {
-    padding-inline: 0.15em;
-    white-space: nowrap;
-    font-size: 1em;
+
+.selected-item {
+    text-decoration: underline;
 }
 
 #main-area {
@@ -92,6 +104,7 @@ main {
     margin-top: 2px;
     display: grid;
     /* grid-template-rows: auto 1fr; */
+    z-index: 2;
 }
 .hide {
     display: none;
@@ -104,6 +117,12 @@ main {
     background-color: #0f0f0f;
     width: 100%;
     height: -webkit-fill-available;
+    font-size: 1.2em;
+}
+#folder-cont {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9em, 1fr));
+    grid-auto-rows: max-content;
 }
 .editor {
     /* width: 99.9%; */
@@ -115,6 +134,10 @@ main {
     height: 50vh;
     /* position: fixed; */
     position: absolute;
-    z-index: 101;
+    /* z-index: 101; */
     bottom: 0;
+}
+
+.z-top {
+    z-index: 101;
 }

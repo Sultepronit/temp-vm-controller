@@ -1,29 +1,28 @@
 "use strict";
 const folder = document.getElementById('folder');
-
-
-function selectDir(path) {
-    console.log(path);
-}
+const folderCont = document.getElementById('folder-cont');
 
 function folderContUpdate(baseDir, dirContObject) {
-    console.log('Here we go!');
+    // console.log('Here we go!');
     let dirCont = '';
-    for(const dir of dirContObject.directories) {
-        const fullPath = `${baseDir}/${dir}`;
-        dirCont += createDirTag(fullPath, dir);
+    for(const dirName of dirContObject.directories) {
+        const path = `${baseDir}/${dirName}`;
+        dirCont += `
+            <p class="dir-name filename" onclick="selectItem('dir','${path}')">
+                <abbr title=${path}>${dirName}</abbr>
+            </p>
+        `;
     }
 
     for(const file of dirContObject.files) {
-        const fullPath = `${baseDir}/${file}`;
-        const id = pathToId(fullPath);
+        const path = `${baseDir}/${file}`;
         dirCont += `
-            <p id="${id}" class="filename" onclick="selectItem('file', '${fullPath}')">
-                <abbr title=${fullPath}>${file}</abbr>
+            <p class="filename" onclick="selectItem('file', '${path}')">
+                <abbr title=${path}>${file}</abbr>
             </p>
         `;
     }
     dirCont += '</div>';
     
-    folder.innerHTML = dirCont;
+    folderCont.innerHTML = dirCont;
 }

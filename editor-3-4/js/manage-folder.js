@@ -27,9 +27,16 @@ function folderContUpdate(baseDir, dirContObject) {
     folderCont.innerHTML = dirCont;
 }
 
+function refreshFileTree() {
+    // console.log(treeObject.expandedDirs);
+    for(const dir of treeObject.expandedDirs) {
+        selectDir(dir);
+    }
+}
+
 //dir actions
 const actions = {
-    newItem(name) {
+    async newItem(name) {
         const postData = {
             action: 'manage-filesystem',
             name,
@@ -38,9 +45,9 @@ const actions = {
         }
         console.log(postData);
 
-        sendRequest(postData).then((response) => {
-            // highlightChanges(false);
-        });
+        await sendRequest(postData);
+
+        refreshFileTree();
     }
 };
 let expectedAction = '';
@@ -64,7 +71,7 @@ function initNewItem() {
 document.getElementById('new-item')
     .addEventListener('click', () => initNewItem());
 
-function rm() {
+async function rm() {
     if(!confirm(`Remove ${selectedItem.path} ?`)) renurn;
     const postData = {
         action: 'manage-filesystem',
@@ -74,10 +81,33 @@ function rm() {
     }
     console.log(postData);
 
-    sendRequest(postData).then((response) => {
-        // highlightChanges(false);
-    });
+    // sendRequest(postData).then((response) => {
+    //     // highlightChanges(false);
+    // });
+    await sendRequest(postData);
+
+    refreshFileTree();
 }
 
 document.getElementById('rm')
     .addEventListener('click', () => rm());
+
+function changeRoot() {
+    treeObject.expandedDirs = [];
+
+    if(selectedItem.path === treeObject.projectRoot?.path) {
+        treeObject.projectRoot = null;
+        newTree(treeObject.root);
+    } else {
+        treeObject.projectRoot = {
+            path: selectedItem.path, dirName: selectedItem.path
+        }
+        newTree(treeObject.projectRoot);
+    }
+
+    console.log(treeObject);
+}
+
+document.getElementById('change-root')
+    .addEventListener('click', () => changeRoot());
+

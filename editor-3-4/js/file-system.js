@@ -98,28 +98,39 @@ const expandedDirStyle = {
     }
 }
 
-const expandedDirs = [];
+const treeObject = {
+    root: {
+        path: '.', dirName: 'root'
+    },
+    projectRoot: null,
+    expandedDirs: []
+
+}
+// const expandedDirs = [];
 
 function selectDir(path) {
-    console.log('selectDir()');
-    const theIndex = expandedDirs.indexOf(path);
+    // console.log('selectDir()');
+    const theIndex = treeObject.expandedDirs.indexOf(path);
     if(theIndex >= 0) {
         const id = pathToId(path);
-        document.querySelector(`#${id} .dir-cont`).outerHTML = '';
+        const dirCont = document.querySelector(`#${id} .dir-cont`);
+        if(dirCont) {
+            dirCont.outerHTML = '';
+        }
     } else {
-        expandedDirs.push(path);
+        treeObject.expandedDirs.push(path);
     }
     updateDirCont(path);
 }
 
 function toggleDirContent(path) {
-    const theIndex = expandedDirs.indexOf(path);
+    const theIndex = treeObject.expandedDirs.indexOf(path);
     if(theIndex >= 0) {
         const id = pathToId(path);
         document.querySelector(`#${id} .dir-cont`).outerHTML = '';
         expandedDirStyle.remove(id);
 
-        delete expandedDirs[theIndex];
+        delete treeObject.expandedDirs[theIndex];
     } else {
         selectItem('dir', path);
     }
@@ -144,7 +155,7 @@ function createDirTag(path, dirName) {
     return tag;
 }
 
-function createRoot(path, dirName) {
+function newTree({path, dirName}) {
     const filetree = document.getElementById('filetree');
     filetree.innerHTML = createDirTag(path, dirName);
     selectItem('dir', path);

@@ -22,7 +22,8 @@ function toggleTerminal() {
 document.getElementById('toggle-terminal')
     .addEventListener('click', () => toggleTerminal());
 
-createRoot('.', 'root');
+// createRoot('.', 'root');
+newTree(treeObject.root);
 // createRoot('./editor-3-2', 'editor-3-2');
 
 setTimeout(() => {

@@ -1,5 +1,7 @@
 "use strict";
 const workingPath = document.getElementById('working-path');
+const fileAction = document.getElementById('file-actions');
+const dirAction = document.getElementById('dir-actions');
 
 function pathToId(path) {
     let id = path
@@ -49,9 +51,12 @@ function selectItem(type, path) {
     if(type === 'file') {
         selectFile(path);
         folder.classList.add('hide');
+        dirAction.classList.add('hide');
+        fileAction.classList.remove('hide');
     } else { // dir
-        // selectDir(path);
         folder.classList.remove('hide');
+        dirAction.classList.remove('hide');
+        fileAction.classList.add('hide');
     }
 
     workingPath.innerText = path;

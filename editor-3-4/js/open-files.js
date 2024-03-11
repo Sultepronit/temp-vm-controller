@@ -34,6 +34,8 @@ function findPairs(theFile, files) {
 
 function findNamesakes(files) {
     for(const file of files) {
+        file.prefix = '';
+        console.log(file);
         findPairs(file, files);
     }
 }

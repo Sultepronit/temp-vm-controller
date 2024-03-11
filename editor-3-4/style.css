@@ -18,6 +18,10 @@ main {
     grid-template-columns: auto 1fr;
 }
 
+.hide {
+    display: none;
+}
+
 #filetree {
     overflow: auto;
     height: 100vh;
@@ -106,9 +110,7 @@ main {
     /* grid-template-rows: auto 1fr; */
     z-index: 2;
 }
-.hide {
-    display: none;
-}
+
 #folder {
     /* border: solid 1px #00ff66; */
     position: absolute;

@@ -33,12 +33,21 @@ if($postData['action'] === 'getFile') {
 } else if($postData['action'] === 'getFileTree') {
     require_once 'getFileTree.php';
     echo getFileTree($postData['baseDir']);
-} else  if($postData['action'] === 'manage-filesystem') {
-    $command = 'cd ' . $postData['path'];
+} else if($postData['action'] === 'manage-filesystem') {
+    // $command = 'cd ' . $postData['path'];
+    $command = '';
+
     if($postData['command'] === 'touch') {
-        // $command .= ' && touch' . $postData['name'] . ' 2>&1';
-        $command = "{$command} && touch {$postData['name']} 2>&1";
+        $command = "cd {$postData['path']} && touch {$postData['name']} 2>&1";
+    } else if($postData['command'] === 'mkdir') {
+        $command = "cd {$postData['path']} && mkdir {$postData['name']} 2>&1";
+    } else if($postData['command'] === 'rm') {
+        $command = "rm -r {$postData['item']} 2>&1";
     }
+
+    echo $command;
+    $result = shell_exec($command);
+    echo $result;
 } else {
     print_r($postData); 
 }

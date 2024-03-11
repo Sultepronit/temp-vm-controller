@@ -1,4 +1,4 @@
-const url = '../main.php';
+const url = '../main2.php';
 
 const password = 'pass';
 

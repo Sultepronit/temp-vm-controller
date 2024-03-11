@@ -26,3 +26,58 @@ function folderContUpdate(baseDir, dirContObject) {
     
     folderCont.innerHTML = dirCont;
 }
+
+//dir actions
+const actions = {
+    newItem(name) {
+        const postData = {
+            action: 'manage-filesystem',
+            name,
+            path: selectedItem.path,
+            command: name.includes('/') ? 'mkdir' : 'touch'
+        }
+        console.log(postData);
+
+        sendRequest(postData).then((response) => {
+            // highlightChanges(false);
+        });
+    }
+};
+let expectedAction = '';
+
+const namesInput = document.getElementById('names-input');
+
+namesInput.addEventListener('keyup', (event) => {
+    if(event.key === 'Enter') {
+        // console.log(event.target.value);
+        actions[expectedAction](event.target.value);
+        event.target.value = '';
+        namesInput.disabled = true;
+    }
+});
+
+function initNewItem() {
+    namesInput.disabled = false;
+    namesInput.focus();
+    expectedAction = 'newItem';
+}
+document.getElementById('new-item')
+    .addEventListener('click', () => initNewItem());
+
+function rm() {
+    if(!confirm(`Remove ${selectedItem.path} ?`)) renurn;
+    const postData = {
+        action: 'manage-filesystem',
+        // name,
+        item: selectedItem.path,
+        command: 'rm'
+    }
+    console.log(postData);
+
+    sendRequest(postData).then((response) => {
+        // highlightChanges(false);
+    });
+}
+
+document.getElementById('rm')
+    .addEventListener('click', () => rm());

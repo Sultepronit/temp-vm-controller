@@ -18,11 +18,8 @@
 <body>
     
     <main>
-        <aside id="filetree">
-            <!-- <div id="root-dir" class="dir">
-                <p class="dir-name filename" onclick="selectItem('dir','.')">root</p>
-            </div> -->
-        </aside>
+        <aside id="filetree"></aside>
+
         <div id="main-area">
             <div id="common-actions">
                 <button id="toggle-terminal">terminal</button>
@@ -32,12 +29,21 @@
                 <div id="tabs"></div>
                 <div id="file-status">
                     <p id="working-path"></p>
-                    <button id="save">save</button>
+                    <div id="file-actions">
+                        <button id="save">save</button>
+                    </div>
+                    <div id="dir-actions">
+                        <button id="new-item">new</button>
+                    </div>
+                    <div id="item-actions">
+                        <button id="rm">remove</button>
+                    </div>
                 </div>
             </div>
 
             <div id="main-pannel">
                 <div id="folder">
+                    <input type="text" id="names-input" disabled>
                     <div id="folder-cont"></div>
                 </div>
                 <div id="monaco" class="editor"></div>

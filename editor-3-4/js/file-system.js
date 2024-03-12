@@ -64,7 +64,7 @@ function selectItem(type, path) {
     selectedDecoration.add(path);
     selectedDecoration.remove(selectedItem.path);
 
-    // selectedItem.type = type;
+    selectedItem.type = type;
     selectedItem.path = path;
 }
 

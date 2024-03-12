@@ -27,27 +27,71 @@ function folderContUpdate(baseDir, dirContObject) {
     folderCont.innerHTML = dirCont;
 }
 
-function refreshFileTree() {
-    // console.log(treeObject.expandedDirs);
-    for(const dir of treeObject.expandedDirs) {
-        selectDir(dir);
+// function removeExpandedDir() {
+
+// }
+
+function refreshFileTree(type, path) {
+    if(!type) { // reselect 
+        type = 'dir';
+        path = selectedItem.path;
+        selectedItem.path = '';
+        const theIndex = treeObject.expandedDirs.indexOf(path);
+        delete treeObject.expandedDirs[theIndex];
     }
+
+    for(const dir of treeObject.expandedDirs) {
+        if(dir) {
+            selectDir(dir);
+        }
+    }
+
+    setTimeout(() => {
+        selectItem(type, path);
+    }, 200);
 }
 
-//dir actions
+function changeRoot() {
+    treeObject.expandedDirs = [];
+
+    if(selectedItem.path === treeObject.projectRoot?.path) {
+        treeObject.projectRoot = null;
+        newTree(treeObject.root);
+    } else {
+        treeObject.projectRoot = {
+            path: selectedItem.path, dirName: selectedItem.path
+        }
+        newTree(treeObject.projectRoot);
+    }
+
+    console.log(treeObject);
+}
+
+document.getElementById('change-root')
+    .addEventListener('click', () => changeRoot());
+
+//sh commands
 const actions = {
     async newItem(name) {
+        const command = name.includes('/') ? 'mkdir' : 'touch';
+        if(name.includes('/')) {
+
+        }
         const postData = {
             action: 'manage-filesystem',
             name,
             path: selectedItem.path,
-            command: name.includes('/') ? 'mkdir' : 'touch'
+            command
         }
         console.log(postData);
 
         await sendRequest(postData);
 
-        refreshFileTree();
+        if(command === 'mkdir') {
+            refreshFileTree();
+        } else { // touch
+            refreshFileTree('file', `${selectedItem.path}/${name}`);
+        }
     }
 };
 let expectedAction = '';
@@ -71,43 +115,32 @@ function initNewItem() {
 document.getElementById('new-item')
     .addEventListener('click', () => initNewItem());
 
+function getParentPath(path) {
+    const theIndex = path.lastIndexOf('/');
+    console.log(path.substring(0, theIndex));
+    return path.substring(0, theIndex);
+}
+
 async function rm() {
     if(!confirm(`Remove ${selectedItem.path} ?`)) renurn;
     const postData = {
         action: 'manage-filesystem',
-        // name,
         item: selectedItem.path,
         command: 'rm'
     }
     console.log(postData);
 
-    // sendRequest(postData).then((response) => {
-    //     // highlightChanges(false);
-    // });
     await sendRequest(postData);
 
-    refreshFileTree();
+    if(selectedItem.type === 'dir') {
+        toggleDirContent(selectedItem.path);
+    }
+
+    refreshFileTree('dir', getParentPath(selectedItem.path));
 }
 
 document.getElementById('rm')
     .addEventListener('click', () => rm());
 
-function changeRoot() {
-    treeObject.expandedDirs = [];
 
-    if(selectedItem.path === treeObject.projectRoot?.path) {
-        treeObject.projectRoot = null;
-        newTree(treeObject.root);
-    } else {
-        treeObject.projectRoot = {
-            path: selectedItem.path, dirName: selectedItem.path
-        }
-        newTree(treeObject.projectRoot);
-    }
-
-    console.log(treeObject);
-}
-
-document.getElementById('change-root')
-    .addEventListener('click', () => changeRoot());
 

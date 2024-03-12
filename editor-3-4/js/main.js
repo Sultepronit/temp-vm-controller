@@ -27,7 +27,7 @@ newTree(treeObject.root);
 // createRoot('./editor-3-2', 'editor-3-2');
 
 setTimeout(() => {
-    // terminal.src = `http://${location.hostname}:8080`;
+    terminal.src = `http://${location.hostname}:8080`;
     console.log(terminal);
 }, 4000);
 

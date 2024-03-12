@@ -60,6 +60,7 @@ main {
 #main-area {
     /* flex: 1; */
     display: grid;
+    /* grid-template-rows: auto auto auto 1fr; */
     grid-template-rows: auto auto 1fr;
     position: relative;
     margin-left: 3px;
@@ -101,7 +102,7 @@ main {
 
 #working-path {
     background: black;
-    width: 50%;
+    width: 70%;
     padding-inline: 0.2em;
 }
 #main-pannel {
@@ -109,6 +110,16 @@ main {
     display: grid;
     /* grid-template-rows: auto 1fr; */
     z-index: 2;
+}
+#names-input {
+    /* display: none; */
+    z-index: 102;
+    font-size: 1.5rem;
+    height: 1.3em;
+    background: black;
+    color: white;
+    width: 50%;
+    margin-inline: auto;
 }
 
 #folder {
@@ -129,6 +140,7 @@ main {
 .editor {
     /* width: 99.9%; */
     width: 99.0%;
+    /* height: -webkit-fill-available; */
 }
 .terminal {
     /* display: none; */

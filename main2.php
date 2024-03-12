@@ -43,6 +43,9 @@ if($postData['action'] === 'getFile') {
         $command = "cd {$postData['path']} && mkdir {$postData['name']} 2>&1";
     } else if($postData['command'] === 'rm') {
         $command = "rm -r {$postData['item']} 2>&1";
+    } else if($postData['command'] === 'mv') {
+        $command = "mv {$postData['was']} {$postData['become']} 2>&1";
+        // $command = "mv {$postData['was']} {$postData['become']}";
     }
 
     echo $command;

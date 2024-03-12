@@ -70,6 +70,16 @@ function changeRoot() {
 document.getElementById('change-root')
     .addEventListener('click', () => changeRoot());
 
+function getParentPath(path) {
+    const theIndex = path.lastIndexOf('/');
+    return path.substring(0, theIndex);
+}
+
+function getName(path) {
+    const theIndex = path.lastIndexOf('/') + 1;
+    return path.substring(theIndex);
+}
+
 //sh commands
 const actions = {
     async newItem(name) {
@@ -79,9 +89,9 @@ const actions = {
         }
         const postData = {
             action: 'manage-filesystem',
+            command,
             name,
             path: selectedItem.path,
-            command
         }
         console.log(postData);
 
@@ -92,51 +102,91 @@ const actions = {
         } else { // touch
             refreshFileTree('file', `${selectedItem.path}/${name}`);
         }
+    },
+    async rename(newName) {
+        const rootPath = getParentPath(selectedItem.path);
+        const newPath = `${rootPath}/${newName}`;
+
+        const postData = {
+            action: 'manage-filesystem',
+            command: 'mv',
+            was: selectedItem.path,
+            become: newPath
+        }
+        console.log(postData);
+        await sendRequest(postData);
+
+        if(selectedItem.type === 'file') {
+            closeFile(selectedItem.path);
+            setTimeout(() => {
+                refreshFileTree('file', newPath);
+            }, 500);
+        } else { // dir
+            toggleDirContent(selectedItem.path);
+            refreshFileTree('dir', newPath);
+        }
     }
 };
 let expectedAction = '';
 
 const namesInput = document.getElementById('names-input');
+// namesInput.classList.add('hide');
+function activateInput() {
+    namesInput.classList.remove('hide');
+    namesInput.focus();
+}
+
+function deactivateInput() {
+    namesInput.value = '';
+    namesInput.classList.add('hide');
+}
+deactivateInput();
 
 namesInput.addEventListener('keyup', (event) => {
     if(event.key === 'Enter') {
-        // console.log(event.target.value);
         actions[expectedAction](event.target.value);
-        event.target.value = '';
-        namesInput.disabled = true;
+        deactivateInput();
+    } else if(event.key === 'Escape') {
+        deactivateInput();
     }
 });
 
 function initNewItem() {
-    namesInput.disabled = false;
-    namesInput.focus();
+    activateInput();
     expectedAction = 'newItem';
 }
 document.getElementById('new-item')
     .addEventListener('click', () => initNewItem());
 
-function getParentPath(path) {
-    const theIndex = path.lastIndexOf('/');
-    console.log(path.substring(0, theIndex));
-    return path.substring(0, theIndex);
-}
+document.getElementById('rename').addEventListener('click', () => {
+    activateInput();
+    // namesInput.value = 'old name';
+    namesInput.value = getName(selectedItem.path);
+    expectedAction = 'rename';
+});
 
 async function rm() {
     if(!confirm(`Remove ${selectedItem.path} ?`)) renurn;
     const postData = {
         action: 'manage-filesystem',
-        item: selectedItem.path,
-        command: 'rm'
+        command: 'rm',
+        item: selectedItem.path
     }
     console.log(postData);
 
     await sendRequest(postData);
 
-    if(selectedItem.type === 'dir') {
-        toggleDirContent(selectedItem.path);
-    }
-
-    refreshFileTree('dir', getParentPath(selectedItem.path));
+    if(selectedItem.type === 'file') {
+            const parent = getParentPath(selectedItem.path);
+            // closeFile(selectedItem.path);
+            // console.log(parent);
+            setTimeout(() => {
+                refreshFileTree('dir', parent);
+            }, 1000);
+        } else { // dir
+            toggleDirContent(selectedItem.path);
+            refreshFileTree('dir', getParentPath(selectedItem.path));
+        }
 }
 
 document.getElementById('rm')

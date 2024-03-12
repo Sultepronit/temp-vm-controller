@@ -33,6 +33,7 @@ const selectedDecoration = {
 }
 
 // const monacoElement = document.getElementById('monaco');
+// const strictContainer = document.getElementById('strict-container');
 
 const selectedItem = {
     type: '',

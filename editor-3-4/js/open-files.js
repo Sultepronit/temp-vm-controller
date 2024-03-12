@@ -46,14 +46,12 @@ function renderTabs() {
 
     tabsElement.innerHTML = '';
     
-    let index = 0;
+    // let index = 0;
     for(const file of openedFiles) {
         const addClass = file.changed ? 'unsaved-tab' : '';
+        // id="tab-${pathToId(file.path)}"
         tabsElement.innerHTML += `
-            <span
-                id="tab-${pathToId(file.path)}"
-                class="file-tab ${addClass}"
-            >
+            <span id="tab-${pathToId(file.path)}" class="file-tab ${addClass}">
                 <abbr
                     title="${file.path}"
                     onclick="selectItem('file', '${file.path}')"
@@ -61,10 +59,10 @@ function renderTabs() {
                     <span class="name-prefix">${file?.prefix || ''}</span> ${file.name}
                 </abbr>
 
-                <span class="close-file" onclick="closeFile(${index})">✖</span>
+                <span class="close-file" onclick="closeFile('${file.path}')">✖</span>
             </span>
         `;
-        index++
+        // index++
     }
 }
 
@@ -76,9 +74,6 @@ async function openFile(filePath) {
         path: filePath,
         model: createModel(filePath, fileContent),
         changed: false,
-        // setChanged(newVal) {
-        //     this.changed = newVal;
-        // },
     }
     openedFiles.unshift(currentFile);
 }
@@ -106,15 +101,24 @@ async function selectFile(filePath) {
 }
 
 
-function closeFile(index) {
+function closeFile(path) {
     // console.log(index);
     // console.log(openedFiles[index]);
+    // const theFile = openedFiles.find((file) => file.path === path);
+    const index = openedFiles.findIndex((file) => file.path === path);
+    // console.log(theFile);
+    // theFile.model.dispose();
     openedFiles[index].model.dispose();
+    // const index = openedFiles.indexOf(theFile);
     openedFiles.splice(index, 1);
     
     if(index === 0 && openedFiles.length > 0) {
         selectItem('file', openedFiles[0].path);
     } else {
         renderTabs();
+    }
+
+    if(openedFiles.length < 1) {
+        refreshFileTree('dir', getParentPath(selectedItem.path));
     }
 }

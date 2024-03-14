@@ -101,7 +101,7 @@ const expandedDirStyle = {
 
 const treeObject = {
     root: {
-        path: '.', dirName: 'root'
+        path: '..', dirName: 'root'
     },
     projectRoot: null,
     expandedDirs: []

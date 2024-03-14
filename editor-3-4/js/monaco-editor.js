@@ -18,17 +18,47 @@ async function initMonaco() {
         wordWrap: 'on',
         theme: 'vs-dark',
         // theme: 'hc-black',
-        fontSize: '20'
+        fontSize: '20',
+        // language: 'html'
     };
     monacoEditor = mnc.editor.create(document.getElementById('monaco'), params);
 }
 initMonaco();
+
+// Register Vue language support
+// mnc.languages.register({
+//   id: 'vue',
+//   extensions: ['.vue'],
+//   aliases: ['Vue', 'vue'],
+//   mimetypes: ['text/vue'],
+// });
+
+// // Define syntax highlighting rules for HTML inside Vue SFCs
+// mnc.languages.setMonarchTokensProvider('vue', {
+//   tokenizer: {
+//     root: [
+//       // HTML tags
+//       [/\<\s*template\s*/, { token: 'delimiter.html' }],
+//       [/\<\s*script\s*/, { token: 'delimiter.html' }],
+//       [/\<\s*style\s*/, { token: 'delimiter.html' }],
+//       // Vue directives
+//       [/@[^\s"'`=]+/, 'attribute.value'],
+//       // HTML comments
+//       [/<!--/, 'comment.html', '@comment'],
+//     ],
+//     comment: [
+//       [/-->/, 'comment.html', '@pop'],
+//       [/--/, 'comment.html'],
+//     ],
+//   },
+// });
 
 function createModel(filePath, fileContent) {
     const url = fileRoot + filePath.substring(1);
     console.log(url);
 
     const model = mnc.editor.createModel(fileContent, null, monaco.Uri.parse(url));
+    // const model = mnc.editor.createModel(fileContent, 'html', monaco.Uri.parse(url));
     model.onDidChangeContent((event) => {
         highlightChanges(true);
     });

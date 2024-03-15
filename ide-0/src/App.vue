@@ -1,22 +1,31 @@
 <script setup>
-import sendRequest from './js/api.js';
-async function getDirCont(dirName) {
-    const postData = {
-        action: 'getFileTree',
-        baseDir: dirName
-    }
-    console.log(postData);
+import { ref } from 'vue';
+import { treeObject, addBranch } from './js/treeLogics.js';
 
-    const resp = await sendRequest(postData);
-    const dirContObject = JSON.parse(resp);
- 
-    console.log(dirContObject);
-}
-getDirCont('..');
+import DirBlock from './components/DirBlock.vue';
+
+addBranch(treeObject.root.name, treeObject.root.path);
+// console.log(branch);
 </script>
 
 <template>
-    <h1>Go</h1>
+    <!-- <DirBlock
+        :parent="treeObject.root.path"
+        dir-name="root"
+    /> -->
+    <div>
+        <p>{{ treeObject.root.name }}</p>
+        <div>
+            <!-- <p v-for="dir in treeObject.branches[0]?.contents.directories" :key="dir">{{ dir }}</p> -->
+            <DirBlock
+                v-for="dir in treeObject.branches[0]?.contents.directories"
+                :key="dir"
+                :parent="treeObject.root.path"
+                :dir-name="dir"
+            />
+        </div>
+    </div>
+    
 </template>
 
 <style scoped>

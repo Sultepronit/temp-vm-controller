@@ -1,4 +1,4 @@
-const url = '../main2.php';
+const url = import.meta.env.VITE_API_URL;
 
 const password = 'pass';
 

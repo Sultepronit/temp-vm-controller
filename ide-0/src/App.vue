@@ -1,30 +1,31 @@
 <script setup>
-import { ref } from 'vue';
-import { treeObject, addBranch } from './js/treeLogics.js';
+// import { ref } from 'vue';
+// import { root, addBranch } from './js/treeLogics.js';
 
-import DirBlock from './components/DirBlock.vue';
+// import DirBlock from './components/DirBlock.vue';
+import TreeDir from './components/TreeDir.vue';
 
-addBranch(treeObject.root.name, treeObject.root.path);
+// addBranch(root.main.name, root.main.path);
 // console.log(branch);
 </script>
 
 <template>
-    <!-- <DirBlock
-        :parent="treeObject.root.path"
-        dir-name="root"
+    <!-- <DirBlock2 
+        index="0"
     /> -->
-    <div>
-        <p>{{ treeObject.root.name }}</p>
-        <div>
-            <!-- <p v-for="dir in treeObject.branches[0]?.contents.directories" :key="dir">{{ dir }}</p> -->
-            <DirBlock
-                v-for="dir in treeObject.branches[0]?.contents.directories"
-                :key="dir"
-                :parent="treeObject.root.path"
-                :dir-name="dir"
-            />
-        </div>
-    </div>
+    <!-- <DirBlock
+        :parent="root.main.path"
+        dir-name=""
+    /> -->
+    <!-- <TreeDir
+        :parent="root.main.path"
+        name=""
+    /> -->
+    <TreeDir
+        parent=""
+        name="root"
+        expand="true"
+    />
     
 </template>
 

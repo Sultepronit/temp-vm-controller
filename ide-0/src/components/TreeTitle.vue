@@ -1,7 +1,11 @@
 <script setup>
-const { parent, name, path } = defineProps(['parent', 'name', 'path']);
+import { selectItem } from '../js/selecting.js';
+
+const { type, parent, name, path }
+    = defineProps(['type', 'parent', 'name', 'path']);
 function select() {
-    console.log(`selected ${path}!`);
+    // console.log(`selected ${path}!`);
+    selectItem(type, parent, name, path);
 }
 </script>
 

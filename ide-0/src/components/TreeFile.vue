@@ -7,7 +7,7 @@ const path = `${parent}/${name}`;
 
 <template>
     <p class="title">
-        <TreeTitle :parent="parent" :name="name" :path="path" />
+        <TreeTitle type="file" :parent="parent" :name="name" :path="path" />
     </p>
 </template>
 

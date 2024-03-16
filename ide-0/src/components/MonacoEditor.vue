@@ -1,36 +1,38 @@
 <script setup>
-console.log('Here we go!');
 import { ref, onMounted } from 'vue';
 
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
-console.log(monaco);
+// import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+// console.log(monaco);
+import { monacoEditor, createEditor } from '../js/monacoLogics.js';
 
-const editor = ref(null);
-console.log(editor);
+const editorElement = ref(null);
+// console.log(editorElement);
 
-let monacoEditor = null;
+// let monacoEditor = null;
 onMounted(() => {
-    console.log(editor);
-    console.log(editor.value);
+    // console.log(editorElement);
+    // console.log(editorElement.value);
 
-    const params = {
-        wordWrap: 'on',
-        theme: 'vs-dark',
-        // theme: 'hc-black',
-        fontSize: '20',
-        // language: 'html'
-    };
-    monacoEditor = monaco.editor.create(editor.value, params);
+    // const params = {
+    //     wordWrap: 'on',
+    //     theme: 'vs-dark',
+    //     // theme: 'hc-black',
+    //     fontSize: '20',
+    //     // language: 'html'
+    // };
+    // monacoEditor = monaco.editor.create(editorElement.value, params);
+    createEditor(editorElement);
 });
 </script>
 
 <template>
-    <h1>Go!</h1>
-    <div ref="editor" id="editor"></div>
+    <div ref="editorElement" id="editor"></div>
 </template>
 
 <style scoped>
 #editor {
-    height: 500px;
+    /* height: 500px; */
+    height: 99vh;
+    border: 1px solid red;
 }
 </style>

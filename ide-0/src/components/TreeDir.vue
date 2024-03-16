@@ -9,7 +9,7 @@ const { parent, name, expand } = defineProps(['parent', 'name', 'expand']);
 // if(!parent) {
 //     path = '.';
 // }
-const path = parent ? `${parent}/${name}` : '.';
+const path = parent ? `${parent}/${name}` : '..';
 
 const isExpanded = ref(false);
 const branchIndex = ref(-1);
@@ -41,7 +41,7 @@ onUnmounted(() => {
             @click="getDirCont"
         >
             <span>+</span>
-            <TreeTitle :parent="parent" :name="name" :path="path" />
+            <TreeTitle type="dir" :parent="parent" :name="name" :path="path" />
         </p>
         <div class="dir-cont" v-if="isExpanded">
             <TreeDir

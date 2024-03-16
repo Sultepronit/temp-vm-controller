@@ -46,14 +46,14 @@ async function addBranch(name, path) {
     return Object.values(branches).length - 1;
 }
 
-setInterval(async () => {
-    console.log('reload!');
-    for(const branch of branches) {
-        if(!branch) continue;
-        // branch.contents = await getDirCont(branch.path);
-        await setDirCont(branch);
-    }
-}, 10000);
+// setInterval(async () => {
+//     console.log('reload!');
+//     for(const branch of branches) {
+//         if(!branch) continue;
+//         // branch.contents = await getDirCont(branch.path);
+//         await setDirCont(branch);
+//     }
+// }, 10000);
 
 // setTimeout(() => {
 //     // console.log(treeObject.branches[1]);

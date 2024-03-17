@@ -17,7 +17,7 @@ async function selectItem(type, parent, name, path) {
         // fetchFileContent(path);
         // editFile(await fetchFileContent(path), path);
         editFile(path);
-    }
+    } 
 }
 
 export { selectItem };

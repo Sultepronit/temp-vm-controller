@@ -2,27 +2,33 @@
 import { ref, onMounted } from 'vue';
 import { editorFrame } from './js/iframeLogics';
 import FileTree from './components/FileTree.vue';
-import MonacoEditor from './components/MonacoEditor.vue';
 const editorUrl = import.meta.env.VITE_EDITOR_ULR;
+// const terminalUrl = import.meta.env.VITE_TERMINAL_ULR;
+const terminalUrl = ref(null);
 
-// const editorFrame = ref(null);
-onMounted(() => {
-    // console.log(editorFrame);
-    // setTimeout(() => {
-    //     // editorFrame.value.contentWindow.postMessage('Here we go!', '*');
-    //     // editorFrame.value.contentWindow.postMessage('Here we go!', 'https://www.teamsimmer.com');
-    //     // editorFrame.value.contentWindow.postMessage('Here we go!', editorUrl);
-    //     editorFrame.value.contentWindow.postMessage('{"file": "../remote.php"}', '*');
+const terminal = ref(null);
+const showTerminal = ref(true);
+// const showTerminal = ref(false);
+// onMounted(() => {
+//     setTimeout(() => terminalUrl.value = import.meta.env.VITE_TERMINAL_ULR, 1000);
+// });
+setTimeout(() => terminalUrl.value = import.meta.env.VITE_TERMINAL_ULR, 2000);
+// onMounted(() => {
+//     // console.log(editorFrame);
+//     setTimeout(() => {
+//         // editorFrame.value.contentWindow.postMessage('Here we go!', '*');
+//         // editorFrame.value.contentWindow.postMessage('Here we go!', 'https://www.teamsimmer.com');
+//         // editorFrame.value.contentWindow.postMessage('Here we go!', editorUrl);
+//         // editorFrame.value.contentWindow.postMessage('{"file": "../remote.php"}', '*');
+//         // terminal.value.contentWindow.postMessage('{"file": "../remote.php"}', '*');
+//         terminal.value.contentWindow.postMessage('ls', '*');
         
-    // }, 2000);
+//     }, 2000);
    
-    // console.log(editorFrame.value.contentWindow);
-});
+//     // console.log(editorFrame.value.contentWindow);
+// });
 
 window.onmessage = function(event){
-    // if (event.data == 'message') {
-    //     console('Message received!');
-    // }
     if(typeof event.data === 'object') {
         return;
     }
@@ -36,20 +42,54 @@ window.onmessage = function(event){
     <main>
         <FileTree id="sidebar" />
         <!-- <MonacoEditor id="editor" /> -->
-        <iframe ref="editorFrame" id="editor" :src="editorUrl"></iframe>
+        <section id="main-section">
+            <div>
+                <button @click="showTerminal = !showTerminal">terminal</button>
+            </div>
+            <iframe ref="editorFrame" id="editor" :src="editorUrl"></iframe>
+            <iframe
+                ref="terminal"
+                id="terminal"
+                :src="terminalUrl"
+                :class="{above: showTerminal}"
+            />
+        </section>
+        
     </main>
 </template>
 
 <style scoped>
 main {
+    height: 100vh;
+    background-color: #212121;
+    color: white;
     display: grid;
     grid-template-columns: auto 1fr;
 }
 #sidebar {
     width: 9em;
+    overflow: auto;
+}
+#main-section {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
 }
 #editor {
+    width: 99.5%;
+    /* width: 100%; */
+    /* height: 99vh; */
+    height: -webkit-fill-available;
+    z-index: 2;
+}
+#terminal {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 99%;
-    height: 99vh;
+    height: 50vh;
+}
+.above {
+    z-index: 3;
 }
 </style>

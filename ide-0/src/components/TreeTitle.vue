@@ -11,7 +11,6 @@ function select() {
 
 <template>
     <abbr :title="path" @click="select">
-        <!-- {{ name }} [{{ path }}] -->
         {{ name }}
     </abbr>
 </template>
@@ -19,5 +18,7 @@ function select() {
 <style scoped>
 abbr {
     text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
 }
 </style>

@@ -1,6 +1,6 @@
 import sendRequest from "./api.js";
 // import { editFile } from "./monacoLogics.js";
-import { editFile } from "./iframeLogics.js";
+import { editFile } from "./editorFrameLogics.js";
 
 async function fetchFileContent(filePath) {
     const postData = {

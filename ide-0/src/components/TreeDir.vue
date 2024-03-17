@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onUnmounted, isProxy } from 'vue';
+import { ref, onUnmounted } from 'vue';
 import { branches, addBranch } from '../js/treeLogics';
 import TreeTitle from './TreeTitle.vue';
 import TreeFile from './TreeFile.vue';
@@ -10,7 +10,6 @@ const path = parent ? `${parent}/${name}` : '..';
 
 const branchIndex = ref(-1);
 const isExpanded = ref(false);
-// const isHidden = ref(true);
 
 async function getDirCont() {
     if(branchIndex.value >= 0) {
@@ -18,7 +17,6 @@ async function getDirCont() {
     }
     branchIndex.value = await addBranch(name, path);
     isExpanded.value = true;
-    // isHidden.value = false;
 }
 if(expand) {
     getDirCont();
@@ -79,11 +77,6 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-.dir {
-    /* border: 1px solid black; */
-    /* padding-left: 0.5rem; */
-    /* margin-bottom: 3px; */
-}
 .dir-title {
     /* color: green; */
     color: #00ff66;

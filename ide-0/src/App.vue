@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { editorFrame } from './js/iframeLogics';
+import { editorFrame } from './js/editorFrameLogics.js'; 
 import FileTree from './components/FileTree.vue';
 const editorUrl = import.meta.env.VITE_EDITOR_ULR;
 // const terminalUrl = import.meta.env.VITE_TERMINAL_ULR;
@@ -9,9 +9,6 @@ const terminalUrl = ref(null);
 const terminal = ref(null);
 const showTerminal = ref(true);
 // const showTerminal = ref(false);
-// onMounted(() => {
-//     setTimeout(() => terminalUrl.value = import.meta.env.VITE_TERMINAL_ULR, 1000);
-// });
 setTimeout(() => terminalUrl.value = import.meta.env.VITE_TERMINAL_ULR, 2000);
 // onMounted(() => {
 //     // console.log(editorFrame);
